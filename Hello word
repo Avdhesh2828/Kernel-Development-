@@ -19,8 +19,12 @@ void cleanup_module(void)
 
 [avdhesh@hostname test]$
 
-Create Makefile:
-[avdhesh_kumar@rd12d02ls-vm0919 test]$ cat Makefile
+
+
+##Create Makefile:
+
+
+[avdhesh@hostname test]$ cat Makefile
 obj-m += hello.o
 
 all:
@@ -29,6 +33,7 @@ all:
 clean:
 	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
 [avdhesh@hostname test]$
+
 
 Run make command :
 

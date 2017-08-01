@@ -1,0 +1,49 @@
+# Kernel hello word program for begineer  
+
+
+[avdhesh@hostname test]$ cat hello.c
+#include <linux/module.h>
+#include <linux/kernel.h>
+
+int init_module(void)
+{
+	printk(KERN_INFO "init_module() called\n");
+	return 0;
+}
+
+void cleanup_module(void)
+{
+	printk(KERN_INFO "cleanup_module() called\n");
+}
+
+
+[avdhesh@hostname test]$
+
+Create Makefile:
+[avdhesh_kumar@rd12d02ls-vm0919 test]$ cat Makefile
+obj-m += hello.o
+
+all:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) modules
+
+clean:
+	make -C /lib/modules/$(shell uname -r)/build M=$(PWD) clean
+[avdhesh@hostname test]$
+
+Run make command :
+
+[avdhesh@hostname test]$make
+make -C /lib/modules/X-XX.X.2X.X.XX5.el6uek.x86_64/build M=/home/avdhesh_kumar/kernel/test modules
+make[1]: Entering directory `/usr/src/kernels/X-XX.X.XX.X.XX5.el6uek.x86_64'
+  CC [M]  /home/avdhesh_kumar/kernel/test/hello.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  SDTINF  /home/avdhesh_kumar/kernel/test/hello.sdtinfo.c
+  CC      /home/avdhesh_kumar/kernel/test/hello.mod.o
+  SDTSTB  /home/avdhesh_kumar/kernel/test/hello.sdtstub.S
+  AS      /home/avdhesh_kumar/kernel/test/hello.sdtstub.o
+  CTF
+  LD [M]  /home/avdhesh_kumar/kernel/test/hello.ko
+make[1]: Leaving directory `/usr/src/kernels/X-XX.X.XX.X.XX5.el6uek.x86_64'
+[avdhesh@hostname test]$
+
